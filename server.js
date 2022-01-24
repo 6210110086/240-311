@@ -4,7 +4,7 @@ var PORT = 6969;
 
 var db = {}
 var num = 0
-var mod = 0
+var modolo = 0
 
 net.createServer(function (sock) {
     var state = 0 
@@ -29,7 +29,7 @@ sock.on('data', function (data) {
                 break
                 }
                 mod = Number(data.toString())
-                num = num%mod
+                num = num%modolo
                 sock.write("Your answer is = "+ num)
             break           
         }
