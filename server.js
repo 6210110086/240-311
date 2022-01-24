@@ -3,42 +3,37 @@ var HOST = '127.0.0.1';
 var PORT = 6969;
 
 var db = {}
+var num = 0
+var mod = 0
 
 net.createServer(function (sock) {
-    var state = 0 //idle
+    var state = 0 
     var current_key = null    
-    sock.on('data', function (data) {
+
+sock.on('data', function (data) {
         switch(state){
             case 0:
-                if(data == 'HELLO'){
-                    sock.write('HELLO')
-                    state = 1 //wait for key
+                if(data.toString() == 'calculate'){
+                    sock.write('online')
+                    state = 1 
                 }
                 break
             case 1:
-                current_key = data
-                sock.write("" + (db[current_key] || 0))
-                state = 2 //wait for number
+                num = Number(data.toString())
+                sock.write(num.toString())
+                state = 2
                 break
             case 2:
-                if(data == 'BYE'){
-                    sock.close()
-                    state = 3 //end                    
-                }else{
-                    try{
-                        let v = parseInt(data)
-                        if(!db[current_key])
-                            db[current_key] = 0
-                        db[current_key] += v
-                        sock.write("" + db[current_key])
-                    }catch(e){
-                        sock.write('INVALID')
-                    }     
+                if(num == 0){
+                state = 3
+                break
                 }
-                break           
+                mod = Number(data.toString())
+                num = num%mod
+                sock.write("Your answer is = "+ num)
+            break           
         }
     });
     
 }).listen(PORT, HOST);
-
 console.log('Server listening on ' + HOST + ':' + PORT);
