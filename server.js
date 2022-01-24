@@ -2,18 +2,19 @@ var net = require('net');
 var HOST = '127.0.0.1';
 var PORT = 6969;
 
-var db = {}
+
 var num = 0
 var modolo = 0
 
 net.createServer(function (sock) {
     var state = 0 
-    var current_key = null    
+
 
 sock.on('data', function (data) {
         switch(state){
             case 0:
                 if(data.toString() == 'calculate'){
+                    console.log(data.toString())
                     sock.write('online')
                     state = 1 
                 }
