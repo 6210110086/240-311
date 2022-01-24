@@ -4,7 +4,7 @@ var PORT = 6969;
 
 
 var num = 0
-var modolo = 0
+var modulo = 0
 
 net.createServer(function (sock) {
     var state = 0 
@@ -20,16 +20,20 @@ sock.on('data', function (data) {
                 break
             case 1:
                 num = Number(data.toString())
+                if(num.toString() != "NaN"){
                 sock.write(num.toString())
-                state = 2
+                state = 2   
+                }
+                else
+                sock.write("INVALID")
                 break
             case 2:
-                if(num == 0){
+                if(num == 0 || data.toString() == "Stop"){
                 state = 3
                 break
                 }
-                modolo = Number(data.toString())
-                num = num%modolo
+                modulo = Number(data.toString())
+                num = num%modulo
                 sock.write("Your answer is = "+ num)
             break           
         }
