@@ -7,15 +7,15 @@ const readline = require("readline").createInterface({
   output: process.stdout,
 });
 
-var employee = new net.Socket();
+var client = new net.Socket();
 
-employee.connect(PORT, HOST, function () {
-  employee.write("calculate");
+client.connect(PORT, HOST, function () {
+  client.write("calculate");
 });
 
-employee.on("data", function (data) {
+client.on("data", function (data) {
   console.log(data.toString());
   readline.question("Input number: ", (input) => {
-    employee.write(input);
+    client.write(input);
   });
 });
