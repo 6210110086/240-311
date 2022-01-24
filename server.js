@@ -9,7 +9,6 @@ var modolo = 0
 net.createServer(function (sock) {
     var state = 0 
 
-
 sock.on('data', function (data) {
         switch(state){
             case 0:
@@ -29,7 +28,7 @@ sock.on('data', function (data) {
                 state = 3
                 break
                 }
-                mod = Number(data.toString())
+                modolo = Number(data.toString())
                 num = num%modolo
                 sock.write("Your answer is = "+ num)
             break           
